@@ -4,8 +4,11 @@
 		{
 			"label": "Run SoulFetch Backend",
 			"type": "shell",
-			"command": "C:/Users/dogso/AppData/Local/Programs/Python/Python313/python.exe backend/main.py",
-			"args": [],
+			"command": "python",
+			"args": [
+				"-m",
+				"backend.main"
+			],
 			"isBackground": false,
 			"problemMatcher": [],
 			"group": "build"
@@ -13,9 +16,97 @@
 		{
 			"label": "Run SoulFetch Frontend",
 			"type": "shell",
-			"command": "C:/Users/dogso/AppData/Local/Programs/Python/Python313/python.exe frontend/main.py",
+			"command": "python",
+			"args": [
+				"frontend/main.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Backend",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"backend.main"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Frontend",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"frontend/main.py"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch",
+			"type": "shell",
+			"command": "python -m frontend.main",
 			"args": [],
 			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch",
+			"type": "shell",
+			"command": "python -m frontend.main",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch",
+			"type": "shell",
+			"command": "python -m frontend.main",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch",
+			"type": "shell",
+			"command": "python -m frontend.main",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch",
+			"type": "shell",
+			"command": "python -m frontend.main",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch",
+			"type": "shell",
+			"command": "python -m frontend.main",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run backend server (Uvicorn)",
+			"type": "shell",
+			"command": "uvicorn backend.adapters.api:app --reload",
+			"args": [],
+			"isBackground": true,
 			"problemMatcher": [],
 			"group": "build"
 		}
