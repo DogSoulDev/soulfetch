@@ -1,6 +1,3 @@
-
-
-
 # SoulFetch
 
 SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp Suite. It is designed for Windows 11 and Linux (Debian), with a professional dark theme and advanced features for API development, testing, and automation.
@@ -25,7 +22,7 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 │   └── soulfetch_icon.png
 ├── .github/copilot-instructions.md # Architecture and execution guidelines
 ├── README.md
-└── (no requirements.txt found)
+└── requirements.txt        # Python dependencies (PySide6, FastAPI, requests, uvicorn, pydantic)
 ```
 
 ## Architecture
@@ -37,7 +34,7 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 ## Main Features
 - Request builder (dynamic endpoint, all HTTP methods)
 - Response viewer (raw, formatted, diff)
-- Terminal/log panel con scroll y expansión automática para visualizar toda la información de logs y respuestas
+- Terminal/log panel with scroll and auto-expansion
 - History and collections (import/export)
 - Environment variable manager (preview/edit)
 - Auth tab (advanced authentication)
@@ -47,9 +44,18 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 - Plugin manager (scripting, extensions)
 - Scheduler/monitor
 - Gemini tab (AI features)
-- Privacy mode
+- Privacy mode (toggle from status bar)
+- Tab reordering and closability (drag, close tabs)
+- Theme selector (dark/light, status bar)
+- Keyboard shortcuts (global)
 - Advanced response visualization
 - Contextual menus, global variables, folders
+
+## Keyboard Shortcuts
+- **Send request:** Ctrl+Enter
+- **Copy response:** Ctrl+Shift+C
+- **Next tab:** Ctrl+Tab
+- **Previous tab:** Ctrl+Shift+Tab
 
 ## Principles
 - SOLID, DRY, KISS
@@ -57,15 +63,30 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 - Modular, maintainable, and extensible code
 
 ## Usage
-1. **Install dependencies:** (No requirements.txt found; ensure PySide6, FastAPI, requests, uvicorn, pydantic are installed)
-2. **Run backend:** `python backend/main.py`
-3. **Run frontend:** `python frontend/main.py`
-4. **Run tests:** `pytest --disable-warnings --tb=short --cov=frontend --cov=backend --cov-report=term-missing`
+1. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
+2. **Run backend:**
+   ```sh
+   python backend/main.py
+   ```
+3. **Run frontend:**
+   ```sh
+   python frontend/main.py
+   ```
+4. **Run tests:**
+   ```sh
+   pytest --disable-warnings --tb=short --cov=frontend --cov=backend --cov-report=term-missing
+   ```
 5. **Explore all tabs:** Request, History, Test Runner, Mock Server, Flow Designer, Environments, Auth, Response Visualizer, Scheduler/Monitor, Plugins/Scripting, Gemini
 
 ## Compatibility
 - Windows 11
 - Linux (Debian)
+
+## Screenshots
+![Main Window](assets/soulfetch_icon.png)
 
 ## Documentation & Contribution
 - Keep this README and `.github/copilot-instructions.md` up to date

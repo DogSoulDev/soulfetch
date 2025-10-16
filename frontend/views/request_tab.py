@@ -1,18 +1,39 @@
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QLineEdit, QPushButton, QTextEdit, QLabel, QCompleter, QMenu, QMessageBox, QFileDialog, QInputDialog, QTabWidget, QProgressBar, QSizePolicy
+    QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QLineEdit, QPushButton, QTextEdit, QLabel, QCompleter, QMenu, QMessageBox, QFileDialog, QInputDialog, QTabWidget, QProgressBar, QSizePolicy,
+    QListWidget, QListWidgetItem, QToolTip
 )
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QTextCursor, QColor, QIcon
 
+## Eliminada definición duplicada de RequestTab y métodos, manteniendo solo la clase principal más abajo
 class RequestTab(QWidget):
+    def _get_current_word(self, text, pos):
+        if not text or pos == 0:
+            return ''
+        left = text[:pos]
+        import re
+        match = re.search(r'(\w+|\{\{\w+\}\})$', left)
+        return match.group(0) if match else ''
+
+    def _insert_body_completion(self, item):
+        cursor = self.body_edit.textCursor()
+        text = self.body_edit.toPlainText()
+        pos = cursor.position()
+        word = self._get_current_word(text, pos)
+        if word:
+            cursor.movePosition(QTextCursor.MoveOperation.Left, QTextCursor.MoveMode.KeepAnchor, len(word))
+            cursor.removeSelectedText()
+            cursor.insertText(item.text())
+            self.body_edit.setTextCursor(cursor)
+        if self._body_popup:
+            self._body_popup.hide()
     response_visualize = Signal(str)
     def __init__(self):
         super().__init__()
         self.setWindowTitle('SoulFetch')
         self.setWindowIcon(QIcon('assets/soulfetch_icon.png'))
         layout = QVBoxLayout()
-
         # Terminal/log panel mejorado
         from PySide6.QtWidgets import QPlainTextEdit
         self.terminal_log = QPlainTextEdit()
@@ -22,7 +43,9 @@ class RequestTab(QWidget):
         self.terminal_log.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout.addWidget(QLabel("Terminal / Log:"))
         layout.addWidget(self.terminal_log)
-
+        # El resto de la inicialización de widgets debe ir aquí, antes de cualquier uso de layout
+        
+    # Métodos de autocompletado y utilidades deben ir después de la inicialización de widgets
         # Request builder controls
         req_layout = QHBoxLayout()
         self.method_box = QComboBox()
@@ -44,7 +67,6 @@ class RequestTab(QWidget):
         req_layout.addWidget(self.send_btn)
         self.send_btn.clicked.connect(self._send_request_with_feedback)
         layout.addLayout(req_layout)
-
         # Smart Request Templates
         template_layout = QHBoxLayout()
         self.template_box = QComboBox()
@@ -63,7 +85,6 @@ class RequestTab(QWidget):
         template_layout.addWidget(self.template_box)
         template_layout.addWidget(self.template_btn)
         layout.addLayout(template_layout)
-
         # Authentication helpers
         auth_layout = QHBoxLayout()
         self.auth_type = QComboBox()
@@ -74,15 +95,14 @@ class RequestTab(QWidget):
         auth_layout.addWidget(self.auth_type)
         auth_layout.addWidget(self.auth_input)
         layout.addLayout(auth_layout)
-
         # Inline Environment Variable Preview
         self.env_vars = {"API_URL": "https://api.example.com", "TOKEN": "abcdef123456"}
         self.env_preview_btn = QPushButton("Preview Environment Variables")
         self.env_preview_btn.setToolTip("Show and edit environment variables used in requests.")
         self.env_preview_btn.clicked.connect(self.show_env_preview)
         layout.addWidget(self.env_preview_btn)
-
         # Request body
+        from PySide6.QtWidgets import QListWidget, QListWidgetItem, QToolTip
         self.body_edit = QTextEdit()
         self.body_edit.setPlaceholderText("Request body (JSON, form, etc.)")
         examples = [
@@ -100,12 +120,16 @@ class RequestTab(QWidget):
         layout.addWidget(QLabel("Body:"))
         layout.addWidget(self.body_edit)
         self._add_context_menu(self.body_edit, format_json=True, format_xml=True, quick_save=True)
-
-        # Security Audit Button
-        self.audit_btn = QPushButton("Security Audit")
-        self.audit_btn.clicked.connect(self.run_security_audit)
-        layout.addWidget(self.audit_btn)
-
+        # Autocompletado avanzado para body_edit
+        self._body_suggestions = [
+            'username', 'password', 'token', 'email', 'search', 'comment', 'X-Api-Key', 'cmd', 'url',
+            'Content-Type', 'Authorization', 'Bearer', 'Basic', 'admin', 'user', 'id', 'name', 'value',
+            'form-data', 'application/json', 'application/xml', 'application/x-www-form-urlencoded',
+        ]
+        self._body_suggestions += [f'{{{{{k}}}}}' for k in self.env_vars.keys()]
+        self.body_edit.textChanged.connect(self._show_body_suggestions)
+        self.body_edit.cursorPositionChanged.connect(self._show_body_tooltip)
+        self._body_popup = None
         # Advanced Response Panel
         layout.addWidget(QLabel("Response:"))
         self.response_tabs = QTabWidget()
@@ -146,11 +170,78 @@ class RequestTab(QWidget):
         btn_layout.addWidget(self.copy_btn)
         btn_layout.addWidget(self.save_btn)
         layout.addLayout(btn_layout)
-        self.setLayout(layout)
         self.visualize_btn = QPushButton("Visualizar en Response Visualizer")
         self.visualize_btn.setToolTip("Enviar la respuesta actual al visualizador de respuestas.")
         self.visualize_btn.clicked.connect(self._emit_response_visualize)
         layout.addWidget(self.visualize_btn)
+        self.setLayout(layout)
+
+    def _show_body_suggestions(self):
+        cursor = self.body_edit.textCursor()
+        text = self.body_edit.toPlainText()
+        pos = cursor.position()
+        word = self._get_current_word(text, pos)
+        filtered = [s for s in self._body_suggestions if word and word.lower() in s.lower()]
+        if not filtered or not word:
+            if self._body_popup is not None:
+                self._body_popup.hide()
+            return
+        if not self._body_popup:
+            self._body_popup = QListWidget(self.body_edit)
+            self._body_popup.setWindowFlags(Qt.WindowType.Popup)
+            self._body_popup.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+            self._body_popup.setMouseTracking(True)
+            self._body_popup.itemClicked.connect(self._insert_body_completion)
+        self._body_popup.clear()
+        for s in filtered:
+            item = QListWidgetItem(s)
+            self._body_popup.addItem(item)
+        rect = self.body_edit.cursorRect()
+        global_pos = self.body_edit.mapToGlobal(rect.bottomRight())
+        self._body_popup.move(global_pos)
+        self._body_popup.setFixedWidth(220)
+        self._body_popup.setFixedHeight(min(120, 24 * len(filtered)))
+        self._body_popup.show()
+
+    def _show_body_tooltip(self):
+        cursor = self.body_edit.textCursor()
+        text = self.body_edit.toPlainText()
+        pos = cursor.position()
+        word = self._get_current_word(text, pos)
+        if word:
+            tip = self._get_body_tooltip(word)
+            if tip:
+                QToolTip.showText(self.body_edit.mapToGlobal(self.body_edit.cursorRect().bottomRight()), tip)
+
+    def _get_body_tooltip(self, word):
+        tooltips = {
+            'username': 'Nombre de usuario para autenticación/login.',
+            'password': 'Contraseña para autenticación/login.',
+            'token': 'Token de autenticación (JWT, OAuth, etc).',
+            'email': 'Correo electrónico del usuario.',
+            'search': 'Texto de búsqueda para endpoints de filtrado.',
+            'comment': 'Comentario o texto libre.',
+            'X-Api-Key': 'Clave API para autenticación.',
+            'cmd': 'Comando para pruebas de seguridad.',
+            'url': 'URL objetivo de la petición.',
+            'Content-Type': 'Tipo de contenido del body (JSON, XML, etc).',
+            'Authorization': 'Cabecera de autenticación.',
+            'Bearer': 'Token tipo Bearer.',
+            'Basic': 'Autenticación básica.',
+            'admin': 'Usuario administrador.',
+            'user': 'Usuario estándar.',
+            'id': 'Identificador único.',
+            'name': 'Nombre.',
+            'value': 'Valor genérico.',
+            'form-data': 'Formato para envío de formularios.',
+            'application/json': 'Formato JSON.',
+            'application/xml': 'Formato XML.',
+            'application/x-www-form-urlencoded': 'Formato de formulario.',
+        }
+        if isinstance(word, str) and word.startswith('{{') and word.endswith('}}'):
+            var = word[2:-2]
+            return f'Variable de entorno: {var} = {self.env_vars.get(var, "(no definida)")}'
+        return tooltips.get(word, '')
 
     def _send_request_with_feedback(self):
         import requests, time

@@ -15,6 +15,12 @@ class EnvironmentManagerTab(QWidget):
         self.var_edit.setPlaceholderText("key1=value1;key2=value2")
         layout.addWidget(self.var_edit)
 
+        # Live variable preview panel
+        self.preview_label = QLabel()
+        self.preview_label.setStyleSheet("background: #222; color: #8be9fd; border-radius: 6px; padding: 8px; font-family: monospace;")
+        layout.addWidget(QLabel("Live Variable Preview:"))
+        layout.addWidget(self.preview_label)
+
         btn_layout = QHBoxLayout()
         self.save_btn = QPushButton("Save Environment")
         self.save_btn.clicked.connect(self.save_environment)
@@ -60,7 +66,24 @@ class EnvironmentManagerTab(QWidget):
         self.security_label = QLabel()
         layout.addWidget(self.security_label)
         self.var_edit.textChanged.connect(self.validate_variables)
-        self.setLayout(layout)
+        self.var_edit.textChanged.connect(self.update_preview)
+        self.env_combo.currentIndexChanged.connect(self.update_preview)
+    def update_preview(self):
+        text = self.var_edit.toPlainText()
+        if text.strip():
+            lines = [f"{line}" for line in text.split(';') if line.strip()]
+            self.preview_label.setText("<br>".join(lines))
+        else:
+            self.preview_label.setText("<i>No variables set</i>")
+        # Tooltip for combo box
+        env_name = self.env_combo.currentText()
+        conn = sqlite3.connect('soulfetch.db')
+        c = conn.cursor()
+        c.execute('SELECT variables FROM env_vars WHERE env_name=?', (env_name,))
+        row = c.fetchone()
+        conn.close()
+        tooltip = row[0] if row and row[0] else "No variables"
+        self.env_combo.setToolTip(tooltip)
 
     def load_environments(self):
         self.env_combo.clear()
@@ -95,6 +118,7 @@ class EnvironmentManagerTab(QWidget):
             self.var_edit.setText(row[0])
             self.result_label.setText(f"Switched to environment '{name}'")
             self.environment_switched.emit(row[0])
+            self.update_preview()
         else:
             self.result_label.setText("Environment not found")
 
