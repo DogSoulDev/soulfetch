@@ -59,8 +59,20 @@ class EnvironmentManagerTab(QWidget):
         self.show_btn.setCheckable(True)
         self.show_btn.clicked.connect(self.toggle_show_variables)
         btn2_layout.addWidget(self.show_btn)
+        # Add YAML and CSV import/export buttons
+        self.export_yaml_btn = QPushButton("Export Environments (YAML)")
+        self.export_yaml_btn.clicked.connect(self.export_environments_yaml)
+        btn2_layout.addWidget(self.export_yaml_btn)
+        self.import_yaml_btn = QPushButton("Import Environments (YAML)")
+        self.import_yaml_btn.clicked.connect(self.import_environments_yaml)
+        btn2_layout.addWidget(self.import_yaml_btn)
+        self.export_csv_btn = QPushButton("Export Environments (CSV)")
+        self.export_csv_btn.clicked.connect(self.export_environments_csv)
+        btn2_layout.addWidget(self.export_csv_btn)
+        self.import_csv_btn = QPushButton("Import Environments (CSV)")
+        self.import_csv_btn.clicked.connect(self.import_environments_csv)
+        btn2_layout.addWidget(self.import_csv_btn)
         layout.addLayout(btn2_layout)
-
         self.result_label = QLabel()
         layout.addWidget(self.result_label)
         self.security_label = QLabel()
@@ -68,6 +80,72 @@ class EnvironmentManagerTab(QWidget):
         self.var_edit.textChanged.connect(self.validate_variables)
         self.var_edit.textChanged.connect(self.update_preview)
         self.env_combo.currentIndexChanged.connect(self.update_preview)
+        self.setLayout(layout)
+    def export_environments_yaml(self):
+        import sqlite3
+        from PySide6.QtWidgets import QFileDialog
+        import yaml
+        conn = sqlite3.connect('soulfetch.db')
+        c = conn.cursor()
+        rows = c.execute('SELECT env_name, variables FROM env_vars').fetchall()
+        conn.close()
+        fname, _ = QFileDialog.getSaveFileName(self, "Export Environments (YAML)", "environments.yaml", "YAML Files (*.yaml)")
+        if fname:
+            with open(fname, "w", encoding="utf-8") as f:
+                yaml.dump([{"env_name": n, "variables": v} for n, v in rows], f, allow_unicode=True, sort_keys=False)
+            self.result_label.setText(f"Exported to {fname}")
+
+    def import_environments_yaml(self):
+        import sqlite3
+        from PySide6.QtWidgets import QFileDialog
+        import yaml
+        fname, _ = QFileDialog.getOpenFileName(self, "Import Environments (YAML)", "", "YAML Files (*.yaml)")
+        if fname:
+            with open(fname, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+            conn = sqlite3.connect('soulfetch.db')
+            c = conn.cursor()
+            c.execute('CREATE TABLE IF NOT EXISTS env_vars (env_name TEXT, variables TEXT)')
+            for env in data:
+                c.execute('INSERT OR REPLACE INTO env_vars (env_name, variables) VALUES (?, ?)', (env["env_name"], env["variables"]))
+            conn.commit()
+            conn.close()
+            self.result_label.setText(f"Imported environments from {fname}")
+            self.load_environments()
+
+    def export_environments_csv(self):
+        import sqlite3, csv
+        from PySide6.QtWidgets import QFileDialog
+        conn = sqlite3.connect('soulfetch.db')
+        c = conn.cursor()
+        rows = c.execute('SELECT env_name, variables FROM env_vars').fetchall()
+        conn.close()
+        fname, _ = QFileDialog.getSaveFileName(self, "Export Environments (CSV)", "environments.csv", "CSV Files (*.csv)")
+        if fname:
+            with open(fname, "w", encoding="utf-8", newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(["env_name", "variables"])
+                for n, v in rows:
+                    writer.writerow([n, v])
+            self.result_label.setText(f"Exported to {fname}")
+
+    def import_environments_csv(self):
+        import sqlite3, csv
+        from PySide6.QtWidgets import QFileDialog
+        fname, _ = QFileDialog.getOpenFileName(self, "Import Environments (CSV)", "", "CSV Files (*.csv)")
+        if fname:
+            with open(fname, "r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                data = list(reader)
+            conn = sqlite3.connect('soulfetch.db')
+            c = conn.cursor()
+            c.execute('CREATE TABLE IF NOT EXISTS env_vars (env_name TEXT, variables TEXT)')
+            for env in data:
+                c.execute('INSERT OR REPLACE INTO env_vars (env_name, variables) VALUES (?, ?)', (env["env_name"], env["variables"]))
+            conn.commit()
+            conn.close()
+            self.result_label.setText(f"Imported environments from {fname}")
+            self.load_environments()
     def update_preview(self):
         text = self.var_edit.toPlainText()
         if text.strip():

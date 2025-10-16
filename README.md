@@ -32,24 +32,29 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 - **Testing:** Full test suite in `tests/` (pytest)
 
 ## Main Features
-- Request builder (dynamic endpoint, all HTTP methods)
-- Response viewer (raw, formatted, diff)
-- Terminal/log panel with scroll and auto-expansion
-- History and collections (import/export)
-- Environment variable manager (preview/edit)
-- Auth tab (advanced authentication)
-- Mock server
-- Test runner
-- Flow designer
-- Plugin manager (scripting, extensions)
-- Scheduler/monitor
-- Gemini tab (AI features)
-- Privacy mode (toggle from status bar)
-- Tab reordering and closability (drag, close tabs)
-- Theme selector (dark/light, status bar)
-- Keyboard shortcuts (global)
-- Advanced response visualization
-- Contextual menus, global variables, folders
+ - Request builder (dynamic endpoint, all HTTP methods)
+ - Response viewer (raw, formatted, diff)
+ - Terminal/log panel with scroll and auto-expansion
+ - History and collections (import/export)
+ - Environment variable manager (preview/edit)
+ - Auth tab (advanced authentication)
+ - Mock server
+ - Test runner
+ - Flow designer
+ - Plugin manager (scripting, extensions)
+ - Scheduler/monitor
+ - Gemini tab (AI features)
+ - Privacy mode (toggle from status bar)
+ - Tab reordering and closability (drag, close tabs)
+ - Theme selector (dark/light, status bar)
+ - Keyboard shortcuts (global)
+ - Advanced response visualization
+ - Contextual menus, global variables, folders
+ - Cloud sync (bi-directional, backend API)
+ - Multi-language code generation (Python, JS, Go, Java, C#)
+ - Accessibility & i18n (high contrast, language switch)
+ - User management (add/remove/list users)
+ - Advanced visualization (aggregated stats, method counts)
 
 ## Keyboard Shortcuts
 - **Send request:** Ctrl+Enter
@@ -79,7 +84,23 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
    ```sh
    pytest --disable-warnings --tb=short --cov=frontend --cov=backend --cov-report=term-missing
    ```
-5. **Explore all tabs:** Request, History, Test Runner, Mock Server, Flow Designer, Environments, Auth, Response Visualizer, Scheduler/Monitor, Plugins/Scripting, Gemini
+5. **Explore all tabs:**
+   - Request
+   - History
+   - Test Runner
+   - Mock Server
+   - Flow Designer
+   - Environments
+   - Auth
+   - Response Visualizer
+   - Scheduler/Monitor
+   - Plugins/Scripting
+   - Gemini
+   - Cloud Sync
+   - CodeGen
+   - Accessibility/i18n
+   - User Management
+   - Visualization
 
 ## Compatibility
 - Windows 11

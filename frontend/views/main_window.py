@@ -133,6 +133,7 @@ class MainWindow(QMainWindow):
         self.add_request_tab()
         self.add_history_tab()
         self.add_gemini_tab()
+        # Add all feature tabs inside __init__
         from .test_runner_tab import TestRunnerTab
         self.test_runner_tab = TestRunnerTab()
         self.tabs.addTab(self.test_runner_tab, "Test Runner")
@@ -157,6 +158,22 @@ class MainWindow(QMainWindow):
         from .plugin_manager_tab import PluginManagerTab
         self.plugin_manager_tab = PluginManagerTab()
         self.tabs.addTab(self.plugin_manager_tab, "Plugins/Scripting")
+        # Advanced features tabs
+        from .user_manager_tab import UserManagerTab
+        self.user_manager_tab = UserManagerTab()
+        self.tabs.addTab(self.user_manager_tab, "User Management")
+        from .cloud_sync_tab import CloudSyncTab
+        self.cloud_sync_tab = CloudSyncTab()
+        self.tabs.addTab(self.cloud_sync_tab, "Cloud Sync")
+        from .codegen_tab import CodeGenTab
+        self.codegen_tab = CodeGenTab()
+        self.tabs.addTab(self.codegen_tab, "CodeGen")
+        from .accessibility_tab import AccessibilityTab
+        self.accessibility_tab = AccessibilityTab()
+        self.tabs.addTab(self.accessibility_tab, "Accessibility/i18n")
+        from .visualization_tab import VisualizationTab
+        self.visualization_tab = VisualizationTab()
+        self.tabs.addTab(self.visualization_tab, "Visualization")
 
         # Layout: sidebar | tabs
         main_layout = QHBoxLayout()

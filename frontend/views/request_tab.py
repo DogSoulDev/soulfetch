@@ -43,6 +43,15 @@ class RequestTab(QWidget):
         self.terminal_log.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         layout.addWidget(QLabel("Terminal / Log:"))
         layout.addWidget(self.terminal_log)
+        # Scripting hooks
+        self.pre_script_edit = QTextEdit()
+        self.pre_script_edit.setPlaceholderText("Pre-request script (Python)")
+        layout.addWidget(QLabel("Pre-request Script:"))
+        layout.addWidget(self.pre_script_edit)
+        self.post_script_edit = QTextEdit()
+        self.post_script_edit.setPlaceholderText("Post-response script (Python)")
+        layout.addWidget(QLabel("Post-response Script:"))
+        layout.addWidget(self.post_script_edit)
         # El resto de la inicialización de widgets debe ir aquí, antes de cualquier uso de layout
         
     # Métodos de autocompletado y utilidades deben ir después de la inicialización de widgets
@@ -244,17 +253,33 @@ class RequestTab(QWidget):
         return tooltips.get(word, '')
 
     def _send_request_with_feedback(self):
+        # Ejecutar pre-request script
+        pre_code = self.pre_script_edit.toPlainText().strip()
+        if pre_code:
+            try:
+                local_vars = {
+                    'method': self.method_box.currentText(),
+                    'url': self.url_input.text(),
+                    'body': self.body_edit.toPlainText(),
+                    'headers': {},
+                    'env_vars': self.env_vars
+                }
+                exec(pre_code, {}, local_vars)
+                self.method_box.setCurrentText(local_vars.get('method', self.method_box.currentText()))
+                self.url_input.setText(local_vars.get('url', self.url_input.text()))
+                self.body_edit.setText(local_vars.get('body', self.body_edit.toPlainText()))
+                self.env_vars = local_vars.get('env_vars', self.env_vars)
+            except Exception as e:
+                self.log_terminal(f"[PRE-SCRIPT ERROR] {e}")
         import requests, time
         method = self.method_box.currentText()
         url = self.url_input.text()
         body = self.body_edit.toPlainText()
         headers = {}
-        # Simple header parsing from auth and env
         if self.auth_type.currentText() == "Bearer Token" and self.auth_input.text():
             headers["Authorization"] = f"Bearer {self.auth_input.text()}"
         elif self.auth_type.currentText() == "Basic Auth" and self.auth_input.text():
             headers["Authorization"] = f"Basic {self.auth_input.text()}"
-        # Replace env vars in URL/body
         url = self.replace_env_vars(url, self.env_vars)
         body = self.replace_env_vars(body, self.env_vars)
         self.response_progress.setVisible(True)
@@ -283,6 +308,20 @@ class RequestTab(QWidget):
                     'body': body
                 }
             )
+            # Ejecutar post-response script
+            post_code = self.post_script_edit.toPlainText().strip()
+            if post_code:
+                try:
+                    local_vars = {
+                        'response': response.text,
+                        'status': response.status_code,
+                        'headers': response.headers,
+                        'elapsed': elapsed
+                    }
+                    exec(post_code, {}, local_vars)
+                    self.log_terminal(f"[POST-SCRIPT OUTPUT] {local_vars.get('output','')}")
+                except Exception as e:
+                    self.log_terminal(f"[POST-SCRIPT ERROR] {e}")
         except Exception as e:
             elapsed = time.time() - start
             error = str(e)
@@ -304,7 +343,6 @@ class RequestTab(QWidget):
                 }
             )
         self.response_progress.setVisible(False)
-        # Log full response for debugging
         if response:
             self.terminal_log.appendPlainText(f"--- Response Start ---\n{response.text}\n--- Response End ---")
 
