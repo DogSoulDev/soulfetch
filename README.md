@@ -55,6 +55,7 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
  - Accessibility & i18n (high contrast, language switch)
  - User management (add/remove/list users)
  - Advanced visualization (aggregated stats, method counts)
+ - Workspace collaboration (real-time sync, team features)
 
 ## Keyboard Shortcuts
 - **Send request:** Ctrl+Enter
@@ -99,6 +100,9 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
    - Cloud Sync
    - CodeGen
    - Accessibility/i18n
+   - User Management
+   - Visualization
+   - Workspace Collaboration
    - User Management
    - Visualization
 

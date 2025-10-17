@@ -65,6 +65,8 @@ class CollectionSidebar(QWidget):
         self.import_history_csv_btn = QPushButton("Import History (CSV)")
         self.import_history_csv_btn.clicked.connect(self.import_history_csv)
         btn_layout.addWidget(self.import_history_csv_btn)
+        self.sidebar_layout.addLayout(btn_layout)
+        self.setLayout(self.sidebar_layout)
     def export_history_yaml(self):
         import sqlite3
         from PySide6.QtWidgets import QFileDialog, QMessageBox

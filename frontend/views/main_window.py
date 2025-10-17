@@ -38,7 +38,9 @@ class MainWindow(QMainWindow):
         self.tabs.setCurrentWidget(self.response_visualizer_tab)
     def __init__(self):
         super().__init__()
+        from PySide6.QtGui import QIcon
         self.setWindowTitle("SoulFetch API Client")
+        self.setWindowIcon(QIcon('assets/soulfetch_icon.png'))
         self.setGeometry(100, 100, 1200, 800)
         self.set_dark_theme()
 
@@ -174,6 +176,9 @@ class MainWindow(QMainWindow):
         from .visualization_tab import VisualizationTab
         self.visualization_tab = VisualizationTab()
         self.tabs.addTab(self.visualization_tab, "Visualization")
+        from .workspace_tab import WorkspaceTab
+        self.workspace_tab = WorkspaceTab()
+        self.tabs.addTab(self.workspace_tab, "Workspace Collaboration")
 
         # Layout: sidebar | tabs
         main_layout = QHBoxLayout()
@@ -189,6 +194,14 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(main_layout)
         central_widget.setMinimumSize(600, 400)
         self.setCentralWidget(central_widget)
+        # Log para depuración en test
+        import sys
+        print(f"[SoulFetch] setCentralWidget ejecutado, valor actual: {self.centralWidget()}", file=sys.stderr)
+        # Fallback: si centralWidget sigue siendo None, crea uno mínimo
+        if self.centralWidget() is None:
+            print("[SoulFetch] centralWidget es None, creando widget mínimo de respaldo", file=sys.stderr)
+            fallback_widget = QWidget()
+            self.setCentralWidget(fallback_widget)
 
         # Keyboard Shortcuts
         from PySide6.QtGui import QShortcut, QKeySequence

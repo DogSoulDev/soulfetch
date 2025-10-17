@@ -67,8 +67,9 @@ class RequestTab(QWidget):
         completer = QCompleter(endpoints)
         try:
             completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
-        except Exception:
-            pass
+        except Exception as e:
+            # Log completer configuration issues but continue
+            print(f"[RequestTab] completer setCaseSensitivity error: {e}")
         self.url_input.setCompleter(completer)
         self.send_btn = QPushButton("Send")
         req_layout.addWidget(self.method_box)
@@ -427,8 +428,14 @@ class RequestTab(QWidget):
             text = widget.toPlainText()
             formatted = json.dumps(json.loads(text), indent=4)
             widget.setText(formatted)
-        except Exception:
-            pass
+        except Exception as e:
+            # Log formatting error and keep original content
+            print(f"[RequestTab] _format_json error: {e}")
+            try:
+                if hasattr(self, 'terminal_log'):
+                    self.terminal_log.appendPlainText(f"[Format JSON Error] {e}")
+            except Exception:
+                pass
 
     def _format_xml(self, widget):
         try:
@@ -437,8 +444,13 @@ class RequestTab(QWidget):
             dom = xml.dom.minidom.parseString(text)
             pretty = dom.toprettyxml()
             widget.setText(pretty)
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[RequestTab] _format_xml error: {e}")
+            try:
+                if hasattr(self, 'terminal_log'):
+                    self.terminal_log.appendPlainText(f"[Format XML Error] {e}")
+            except Exception:
+                pass
 
     def _quick_save(self, widget):
         text = widget.toPlainText() if hasattr(widget, 'toPlainText') else widget.text()

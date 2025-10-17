@@ -1,0 +1,11 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="48" fill="#23242B"/>
+  <!-- Cloud shape -->
+  <ellipse cx="128" cy="150" rx="60" ry="36" fill="#23242B" stroke="#8BE9FD" stroke-width="7"/>
+  <ellipse cx="100" cy="140" rx="28" ry="20" fill="#23242B" stroke="#8BE9FD" stroke-width="5"/>
+  <ellipse cx="156" cy="140" rx="24" ry="18" fill="#23242B" stroke="#8BE9FD" stroke-width="5"/>
+  <!-- Lightning bolt -->
+  <polygon points="128,120 140,150 132,150 144,180 116,152 124,152 112,120" fill="#FF9800" stroke="#FF9800" stroke-width="2"/>
+  <!-- Letters SF -->
+  <text x="50%" y="60%" text-anchor="middle" fill="#FFF" font-size="54" font-family="Segoe UI, Arial, sans-serif" font-weight="bold" dy=".3em">SF</text>
+</svg>

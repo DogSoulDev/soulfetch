@@ -109,6 +109,69 @@
 			"isBackground": true,
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Backend",
+			"type": "shell",
+			"command": "python -m uvicorn backend.main:app --reload",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Frontend",
+			"type": "shell",
+			"command": "python frontend/main.py",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Backend",
+			"type": "shell",
+			"command": "python -m backend.main",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Frontend",
+			"type": "shell",
+			"command": "python frontend/main.py",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Backend",
+			"type": "shell",
+			"command": "python -m backend.main",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Frontend",
+			"type": "shell",
+			"command": "python frontend/main.py",
+			"args": [],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run SoulFetch Frontend with Debug Logs",
+			"type": "shell",
+			"command": "python frontend/main.py",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }
