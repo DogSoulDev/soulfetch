@@ -114,9 +114,14 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 ![Main Window](assets/soulfetch_icon.png)
 
 ## Documentation & Contribution
-- Keep this README and `.github/copilot-instructions.md` up to date
-- See `.github/copilot-instructions.md` for architecture, principles, and execution guidelines
-- All code follows SOLID, DRY, KISS, and professional UX standards
+- This README es para usuarios y overview general. Para detalles técnicos, ver [`GUIA_TECNICA.md`](GUIA_TECNICA.md).
+- Arquitectura y principios: ver también `.github/copilot-instructions.md`.
+- Todo el código sigue SOLID, DRY, KISS y UX profesional.
+
+## License
+SoulFetch es open source bajo licencia MIT con atribución. Puedes usarlo, modificarlo y distribuirlo libremente, siempre que menciones al autor:
+
+   Created by DogSoulDev (https://dogsouldev.github.io/Web/)
 
 ## Status
-All tests pass. No code errors. Full coverage for controllers, backend, mocks, and main features. Ready for further development, packaging, or deployment.
+Todos los tests pasan. Cobertura completa en controladores, backend, mocks y features principales. Listo para producción y despliegue.

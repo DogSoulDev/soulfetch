@@ -1,0 +1,119 @@
+# SoulFetch Technical Guide
+
+## Índice
+- [1. Introducción técnica](#1-introducción-técnica)
+- [2. Estructura de carpetas y módulos](#2-estructura-de-carpetas-y-módulos)
+- [3. Arquitectura y patrones](#3-arquitectura-y-patrones)
+- [4. Backend: FastAPI Hexagonal](#4-backend-fastapi-hexagonal)
+- [5. Frontend: PySide6 MVC](#5-frontend-pyside6-mvc)
+- [6. Persistencia y modelo de datos](#6-persistencia-y-modelo-de-datos)
+- [7. Testing y automatización](#7-testing-y-automatización)
+- [8. Empaquetado y despliegue](#8-empaquetado-y-despliegue)
+- [9. Integración de iconos y recursos](#9-integración-de-iconos-y-recursos)
+- [10. Seguridad, privacidad y buenas prácticas](#10-seguridad-privacidad-y-buenas-prácticas)
+- [11. Extensibilidad y personalización](#11-extensibilidad-y-personalización)
+- [12. Colaboración y sincronización](#12-colaboración-y-sincronización)
+- [13. Accesibilidad e internacionalización](#13-accesibilidad-e-internacionalización)
+- [14. Referencias y recursos](#14-referencias-y-recursos)
+
+---
+
+## 1. Introducción técnica
+SoulFetch es un cliente API avanzado, multiplataforma, construido con una arquitectura robusta y modular. El frontend usa PySide6 (Qt) bajo el patrón MVC, mientras que el backend emplea FastAPI siguiendo principios hexagonales. Todo el código sigue SOLID, DRY y KISS.
+
+## 2. Estructura de carpetas y módulos
+```
+backend/
+  adapters/      # Routers y endpoints (collections, history, environments, etc.)
+  application/   # Lógica de aplicación, casos de uso
+  domain/        # Modelos de dominio y entidades
+  main.py        # Entry point backend
+frontend/
+  controllers/   # Lógica de control y orquestación de vistas/modelos
+  models/        # Modelos de datos y lógica de negocio frontend
+  views/         # Vistas PySide6 (QMainWindow, tabs, widgets)
+  main.py        # Entry point frontend
+assets/          # Iconos, imágenes, recursos estáticos
+SoulFetch.spec   # Configuración PyInstaller para .exe
+LICENSE         # Licencia open source
+```
+
+## 3. Arquitectura y patrones
+- **Frontend:** MVC puro (controllers, models, views). Cada tab es un widget desacoplado.
+- **Backend:** Hexagonal (puertos y adaptadores). Routers desacoplados de lógica de dominio.
+- **Principios:** SOLID, DRY, KISS, separación de responsabilidades, modularidad, extensibilidad.
+
+## 4. Backend: FastAPI Hexagonal
+- **Routers:** Cada recurso (collections, history, environments, etc.) tiene su router en `adapters/`.
+- **Dominio:** Modelos y lógica de negocio en `domain/`.
+- **Aplicación:** Casos de uso y orquestación en `application/`.
+- **Persistencia:** SQLite, acceso directo o vía modelos Pydantic.
+- **Mock server:** Router dedicado para pruebas y simulación de APIs.
+- **WebSocket:** Soporte para colaboración y sync en tiempo real.
+
+## 5. Frontend: PySide6 MVC
+- **MainWindow:** Orquesta pestañas, sidebar, status bar, temas, shortcuts y notificaciones.
+- **Tabs:** Cada funcionalidad (Request, History, Auth, etc.) es un widget independiente.
+- **Controllers:** Gestionan la lógica de cada vista y la comunicación con modelos y backend.
+- **Models:** Encapsulan datos y lógica de negocio local.
+- **Vistas:** Widgets PySide6, layouts responsivos, dark theme, accesibilidad.
+- **Notificaciones:** Toasts, status bar, mensajes de error y éxito.
+- **Shortcuts:** Atajos globales y por tab.
+
+## 6. Persistencia y modelo de datos
+- **SQLite:** Base de datos local (`db/soulfetch.db`).
+- **Tablas:** collections, history, env_vars, users, etc.
+- **ORM:** Uso de Pydantic para validación y serialización.
+- **Import/export:** Soporte YAML, CSV, JSON para colecciones e historial.
+
+## 7. Testing y automatización
+- **Pytest:** Suite completa en `tests/` para backend y frontend.
+- **Cobertura:** Pruebas unitarias y de integración, mocks para endpoints externos.
+- **Headless:** Tests frontend robustos para entornos sin GUI.
+- **CI/CD:** Preparado para integración continua.
+
+## 8. Empaquetado y despliegue
+- **PyInstaller:** Archivo `SoulFetch.spec` para generar el .exe con icono y recursos.
+- **Icono:** `assets/soulfetch_icon.ico` y `.png` para integración Windows.
+- **Cross-platform:** Compatible con Windows 11 y Linux (Debian).
+
+## 9. Integración de iconos y recursos
+- **Ventana principal:** `setWindowIcon(QIcon('assets/soulfetch_icon.png'))`.
+- **PyInstaller:** Flag `--icon=assets/soulfetch_icon.ico` en el spec.
+- **Assets:** Centralizados en la carpeta `assets/`.
+
+## 10. Seguridad, privacidad y buenas prácticas
+- **Privacy mode:** Botón global, desactiva historial y persistencia.
+- **Validación:** Inputs validados en frontend y backend.
+- **Errores:** Manejo robusto, logs y feedback al usuario.
+- **CORS:** Configurado en backend para desarrollo y producción.
+- **Licencia:** MIT con atribución obligatoria.
+
+## 11. Extensibilidad y personalización
+- **Plugins:** Tab de plugins/scripting para extensiones Python.
+- **Codegen:** Generación de snippets multi-lenguaje.
+- **Temas:** Selector dark/light, fácil de ampliar.
+- **Variables globales:** Panel de entorno editable.
+
+## 12. Colaboración y sincronización
+- **Cloud Sync:** Sincronización bi-direccional con backend.
+- **Workspace Collaboration:** WebSocket y endpoints dedicados.
+- **User Management:** Gestión de usuarios, roles y permisos.
+
+## 13. Accesibilidad e internacionalización
+- **i18n:** Soporte multi-idioma, fácil de ampliar.
+- **Accesibilidad:** Alto contraste, navegación por teclado, tooltips.
+- **Visualización:** Gráficas, estadísticas, paneles avanzados.
+
+## 14. Referencias y recursos
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [PySide6](https://doc.qt.io/qtforpython/)
+- [PyInstaller](https://pyinstaller.org/)
+- [Burp Suite](https://portswigger.net/burp)
+- [Postman](https://www.postman.com/)
+- [Apidog](https://apidog.com/)
+- [MIT License](LICENSE)
+
+---
+
+**Autor:** DogSoulDev — https://dogsouldev.github.io/Web/
