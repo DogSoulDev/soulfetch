@@ -117,3 +117,69 @@ LICENSE         # Licencia open source
 ---
 
 **Autor:** DogSoulDev — https://dogsouldev.github.io/Web/
+
+# 15. Ejemplos de uso avanzado
+
+## Ejemplo: Crear y ejecutar una colección de peticiones
+1. Abre SoulFetch y crea una nueva colección desde la barra lateral.
+2. Añade varias peticiones (GET, POST, etc.) con diferentes entornos.
+3. Usa variables de entorno en la URL y el body (`{{API_URL}}`, `{{TOKEN}}`).
+4. Ejecuta la colección y visualiza los resultados en la pestaña de History.
+5. Exporta la colección a YAML o CSV para compartirla.
+
+## Ejemplo: Automatización y scripting
+- Usa la pestaña Test Runner para escribir scripts Python que validen respuestas.
+- Programa peticiones recurrentes desde Scheduler/Monitor.
+- Añade plugins en la pestaña Plugins/Scripting para extender funcionalidades.
+
+## Ejemplo: Colaboración en tiempo real
+- Conecta a un workspace colaborativo desde la pestaña Workspace Collaboration.
+- Sincroniza colecciones y entornos con Cloud Sync.
+- Gestiona usuarios y permisos desde User Management.
+
+# 16. Troubleshooting y preguntas frecuentes
+
+**¿Por qué no veo respuestas o el backend no responde?**
+- Verifica que el backend esté corriendo (`python backend/main.py` o con Uvicorn).
+- Comprueba la configuración de CORS y el puerto.
+
+**¿Cómo agrego un nuevo tipo de autenticación?**
+- Añade la lógica en `frontend/views/auth_tab.py` y expande el backend si es necesario.
+
+**¿Cómo personalizo el tema?**
+- Modifica la función `set_dark_theme` en `frontend/views/main_window.py` o añade nuevos estilos.
+
+**¿Cómo empaqueto el programa para Windows?**
+- Usa PyInstaller con el spec incluido: `pyinstaller SoulFetch.spec`.
+
+# 17. Diagrama de arquitectura (ASCII)
+
+```
+┌────────────┐      HTTP/WebSocket      ┌──────────────┐
+│  Frontend  │◀───────────────────────▶│   Backend    │
+│  PySide6   │                        │   FastAPI    │
+├────────────┤                        ├──────────────┤
+│ Controllers│                        │  Routers     │
+│  Models    │                        │  Domain      │
+│  Views     │                        │  Application │
+│  Assets    │                        │  DB/SQLite   │
+└────────────┘                        └──────────────┘
+```
+
+**Flujo típico:**
+1. El usuario interactúa con la GUI (PySide6).
+2. Los controllers gestionan la lógica y llaman a modelos o al backend.
+3. El backend responde con datos, que se muestran en las vistas.
+4. Todo es modular, desacoplado y extensible.
+
+# 18. Glosario rápido
+
+- **Colección:** Grupo de peticiones guardadas.
+- **Entorno:** Conjunto de variables reutilizables.
+- **Mock server:** Simula respuestas de API.
+- **Scheduler:** Programa peticiones automáticas.
+- **Plugin:** Script Python que extiende la app.
+- **Workspace:** Espacio colaborativo multiusuario.
+
+---
+Para dudas, sugerencias o contribuciones, visita: https://dogsouldev.github.io/Web/
