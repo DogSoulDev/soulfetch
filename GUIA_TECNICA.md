@@ -55,12 +55,16 @@ LICENSE         # Licencia open source
 
 ## 5. Frontend: PySide6 MVC
 - **MainWindow:** Orquesta pestañas, status bar, temas, atajos y notificaciones.
- - **Tabs:** Cada funcionalidad (Request, History, Auth, etc.) es un widget independiente. Las pestañas Mock Server, Cloud Sync, CodeGen, Visualization y Workspace Collaboration se ocultan automáticamente si el endpoint no está disponible o no tienen lógica real. La pestaña Flow Designer ha sido eliminada hasta que exista backend real.
+- **Tabs:** Cada funcionalidad (Request, History, Auth, etc.) es un widget independiente. Las pestañas Mock Server, Cloud Sync, CodeGen, Visualization y Workspace Collaboration se ocultan automáticamente si el endpoint no está disponible o no tienen lógica real. La pestaña Flow Designer ha sido eliminada hasta que exista backend real. Los atajos de teclado incluyen: Enter/Ctrl+Enter/Ctrl+R para enviar, Ctrl+S para guardar, Ctrl+Tab para navegar.
 - **Controllers:** Gestionan la lógica de cada vista y la comunicación con modelos y backend.
 - **Models:** Encapsulan datos y lógica de negocio local.
 - **Vistas:** Widgets PySide6, layouts responsivos, dark theme, accesibilidad.
 - **Notificaciones:** Toasts, status bar, mensajes de error y éxito.
-- **Shortcuts:** Atajos globales y por pestaña.
+- **Shortcuts:** Atajos globales y por pestaña (ver README).
+## 15. Recomendaciones de uso y depuración
+- Si una pestaña, botón o menú no tiene lógica real, se oculta automáticamente.
+- Todos los errores y advertencias se muestran en el panel de log/terminal.
+- Para depuración avanzada, revisar el archivo `.github/copilot-instructions.md` y este documento.
 
 ## 6. Persistencia y modelo de datos
 - **SQLite:** Base de datos local (`db/soulfetch.db`).

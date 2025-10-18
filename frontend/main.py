@@ -1,7 +1,9 @@
 
-
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PySide6.QtWidgets import QApplication
-from frontend.controllers.main_window_controller import MainWindowController
+from controllers.main_window_controller import MainWindowController
 import sys
 
 if __name__ == "__main__":

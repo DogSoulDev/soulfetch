@@ -52,6 +52,32 @@ class RequestTab(QWidget):
         self._setup_response_tabs()
         self._setup_info_and_log()
         self._setup_progress_bar()
+        self._setup_shortcuts()
+
+    def _setup_shortcuts(self):
+        from PySide6.QtGui import QShortcut, QKeySequence
+        from PySide6.QtCore import Qt
+        # ENTER triggers SEND if focus is on url_input or body_edit
+        enter_shortcut = QShortcut(QKeySequence('Return'), self)
+        enter_shortcut.activated.connect(self._trigger_send_if_focused)
+        enter_shortcut2 = QShortcut(QKeySequence('Enter'), self)
+        enter_shortcut2.activated.connect(self._trigger_send_if_focused)
+        # Ctrl+Enter triggers SEND always
+        ctrl_enter_shortcut = QShortcut(QKeySequence('Ctrl+Return'), self)
+        ctrl_enter_shortcut.activated.connect(self._send_request_with_feedback)
+        # Ctrl+S for quick save of body_edit
+        ctrl_s_shortcut = QShortcut(QKeySequence('Ctrl+S'), self)
+        ctrl_s_shortcut.activated.connect(lambda: self._quick_save(self.body_edit))
+        # Ctrl+R for rerun (send again)
+        ctrl_r_shortcut = QShortcut(QKeySequence('Ctrl+R'), self)
+        ctrl_r_shortcut.activated.connect(self._send_request_with_feedback)
+        # Tab/Shift+Tab for focus navigation (optional, Qt default)
+
+    def _trigger_send_if_focused(self):
+        # Only trigger SEND if focus is on url_input or body_edit
+        focus_widget = self.focusWidget()
+        if focus_widget in [self.url_input, self.body_edit]:
+            self._send_request_with_feedback()
 
     def _setup_request_controls(self):
         req_controls = QHBoxLayout()

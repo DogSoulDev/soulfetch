@@ -60,7 +60,8 @@ SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It f
 - Workspace collaboration (real-time sync, team features)
 
 ## Keyboard Shortcuts
-- **Send request:** Ctrl+Enter
+- **Send request:** Ctrl+Enter, Enter (en URL o Body), Ctrl+R
+- **Save body:** Ctrl+S
 - **Copy response:** Ctrl+Shift+C
 - **Next tab:** Ctrl+Tab
 - **Previous tab:** Ctrl+Shift+Tab
@@ -88,17 +89,21 @@ SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It f
    pytest --disable-warnings --tb=short --cov=frontend --cov=backend --cov-report=term-missing
    ```
 5. **Explore all tabs:**
-   - Request
-   - History
-   - Test Runner
-   - Environments
-   - Auth
-   - Response Visualizer
-   - Scheduler/Monitor
-   - Plugins/Scripting
-   - Accessibility/i18n
-   - User Management
-   - (Las pestañas Mock Server, Cloud Sync, CodeGen, Visualization y Workspace Collaboration se ocultan si el endpoint no está disponible o no tienen lógica real)
+   - Request (envío real, shortcuts, templates externos)
+   - History (requiere backend, oculta si no responde)
+   - Test Runner (scripts reales, oculta si no hay lógica)
+   - Environments (gestión y preview de variables)
+   - Auth (autenticación avanzada)
+   - Response Visualizer (depende de respuesta)
+   - Scheduler/Monitor (oculta si no hay lógica)
+   - Plugins/Scripting (oculta si no ejecuta scripts)
+   - Accessibility/i18n (contraste, idioma)
+   - User Management (gestión de usuarios)
+   - Mock Server, Cloud Sync, CodeGen, Visualization, Workspace Collaboration (solo visibles si el endpoint responde y tienen lógica real)
+## Debugging & Recommendations
+- Si una pestaña, botón o menú no tiene lógica real, se oculta automáticamente.
+- Todos los errores se muestran en el panel de log/terminal.
+- Para depuración avanzada, revisar el archivo `copilot-instructions.md` y la guía técnica.
 
 ## Compatibility
 - Windows 11
