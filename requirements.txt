@@ -1,0 +1,6 @@
+PySide6
+FastAPI
+Uvicorn
+requests
+sqlalchemy
+python-dotenv

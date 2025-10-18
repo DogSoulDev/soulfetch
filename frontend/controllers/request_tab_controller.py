@@ -30,7 +30,12 @@ class RequestTabController:
         self.tab.log_terminal(f"[SEND] {method} {url} | Headers: {headers} | Params: {params}")
         # Show loading indicator in info bar
         self.tab.response_info.setText("⏳ Sending request...")
-        QApplication.processEvents()
+        # Avoid hanging in tests/mocks: only process events if a real QApplication is running
+        try:
+            if QApplication.instance() is not None and hasattr(QApplication.instance(), 'processEvents'):
+                QApplication.processEvents()
+        except Exception:
+            pass
         # Show loading indicator in info bar and progress bar
         self.tab.response_progress.setVisible(True)
         self.tab.response_progress.setRange(0, 0)  # Indeterminate

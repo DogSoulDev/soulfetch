@@ -1,6 +1,8 @@
+![SoulFetch Logo](assets/soulfetch_icon.png)
+
 # SoulFetch
 
-SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp Suite. It is designed for Windows 11 and Linux (Debian), with a professional dark theme and advanced features for API development, testing, and automation.
+SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp Suite. Designed for Windows 11 and Linux (Debian), it features a professional dark theme and advanced tools for API development, testing, and automation.
 
 ## Directory Structure
 
@@ -22,7 +24,7 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 │   └── soulfetch_icon.png
 ├── .github/copilot-instructions.md # Architecture and execution guidelines
 ├── README.md
-└── requirements.txt        # Python dependencies (PySide6, FastAPI, requests, uvicorn, pydantic)
+└── requirements.txt        # Python dependencies
 ```
 
 ## Architecture
@@ -32,30 +34,30 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 - **Testing:** Full test suite in `tests/` (pytest)
 
 ## Main Features
- - Request builder (dynamic endpoint, all HTTP methods)
- - Response viewer (raw, formatted, diff)
- - Terminal/log panel with scroll and auto-expansion
- - History and collections (import/export)
- - Environment variable manager (preview/edit)
- - Auth tab (advanced authentication)
- - Mock server
- - Test runner
- - Flow designer
- - Plugin manager (scripting, extensions)
- - Scheduler/monitor
- - Gemini tab (AI features)
- - Privacy mode (toggle from status bar)
- - Tab reordering and closability (drag, close tabs)
- - Theme selector (dark/light, status bar)
- - Keyboard shortcuts (global)
- - Advanced response visualization
- - Contextual menus, global variables, folders
- - Cloud sync (bi-directional, backend API)
- - Multi-language code generation (Python, JS, Go, Java, C#)
- - Accessibility & i18n (high contrast, language switch)
- - User management (add/remove/list users)
- - Advanced visualization (aggregated stats, method counts)
- - Workspace collaboration (real-time sync, team features)
+- Request builder (dynamic endpoint, all HTTP methods)
+- Response viewer (raw, formatted, diff)
+- Terminal/log panel with scroll and auto-expansion
+- History and collections (import/export)
+- Environment variable manager (preview/edit)
+- Auth tab (advanced authentication)
+ - Mock server (oculta si el endpoint no está disponible)
+- Test runner
+  
+- Plugin manager (scripting, extensions)
+- Scheduler/monitor
+- Gemini tab (AI features)
+- Privacy mode (toggle from status bar)
+- Tab reordering and closability (drag, close tabs)
+- Theme selector (dark/light, status bar)
+- Keyboard shortcuts (global)
+- Advanced response visualization
+- Contextual menus, global variables, folders
+- Cloud sync (bi-directional, backend API)
+- Multi-language code generation (Python, JS, Go, Java, C#)
+- Accessibility & i18n (high contrast, language switch)
+- User management (add/remove/list users)
+- Advanced visualization (aggregated stats, method counts)
+- Workspace collaboration (real-time sync, team features)
 
 ## Keyboard Shortcuts
 - **Send request:** Ctrl+Enter
@@ -89,22 +91,14 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
    - Request
    - History
    - Test Runner
-   - Mock Server
-   - Flow Designer
    - Environments
    - Auth
    - Response Visualizer
    - Scheduler/Monitor
    - Plugins/Scripting
-   - Gemini
-   - Cloud Sync
-   - CodeGen
    - Accessibility/i18n
    - User Management
-   - Visualization
-   - Workspace Collaboration
-   - User Management
-   - Visualization
+   - (Las pestañas Mock Server, Cloud Sync, CodeGen, Visualization y Workspace Collaboration se ocultan si el endpoint no está disponible o no tienen lógica real)
 
 ## Compatibility
 - Windows 11

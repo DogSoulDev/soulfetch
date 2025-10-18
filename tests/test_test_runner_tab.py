@@ -1,5 +1,5 @@
 import pytest
-from frontend.views.test_runner_tab import TestRunnerTab
+from frontend.views.test_runner_tab import _TestRunnerTab as TestRunnerTab
 from PySide6.QtWidgets import QApplication
 
 @pytest.fixture(scope="session")

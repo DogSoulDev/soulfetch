@@ -82,7 +82,7 @@ class EnvironmentManagerTab(QWidget):
         self.env_combo.currentIndexChanged.connect(self.update_preview)
         self.setLayout(layout)
     def export_environments_yaml(self):
-        import sqlite3
+        import sqlite3, os
         from PySide6.QtWidgets import QFileDialog
         import yaml
         conn = sqlite3.connect('soulfetch.db')
@@ -91,16 +91,22 @@ class EnvironmentManagerTab(QWidget):
         conn.close()
         fname, _ = QFileDialog.getSaveFileName(self, "Export Environments (YAML)", "environments.yaml", "YAML Files (*.yaml)")
         if fname:
+            if os.path.isabs(fname) and not fname.startswith(os.getcwd()):
+                self.result_label.setText("[SECURITY] Invalid file path.")
+                return
             with open(fname, "w", encoding="utf-8") as f:
                 yaml.dump([{"env_name": n, "variables": v} for n, v in rows], f, allow_unicode=True, sort_keys=False)
             self.result_label.setText(f"Exported to {fname}")
 
     def import_environments_yaml(self):
-        import sqlite3
+        import sqlite3, os
         from PySide6.QtWidgets import QFileDialog
         import yaml
         fname, _ = QFileDialog.getOpenFileName(self, "Import Environments (YAML)", "", "YAML Files (*.yaml)")
         if fname:
+            if os.path.isabs(fname) and not fname.startswith(os.getcwd()):
+                self.result_label.setText("[SECURITY] Invalid file path.")
+                return
             with open(fname, "r", encoding="utf-8") as f:
                 data = yaml.safe_load(f)
             conn = sqlite3.connect('soulfetch.db')
@@ -293,6 +299,7 @@ class EnvironmentManagerTab(QWidget):
         if found:
             self.security_label.setText(f"⚠️ Insecure keys detected: {', '.join(found)}")
             self.security_label.setToolTip("Avoid storing sensitive secrets in plaintext. Use encryption and environment separation.")
+            self.result_label.setText("[SECURITY] Warning: You are storing secrets in plaintext. Use encryption!")
         else:
             self.security_label.setText("")
             self.security_label.setToolTip("Variables are safe.")

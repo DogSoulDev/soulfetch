@@ -12,10 +12,23 @@ class HistoryTab(QWidget):
         self.setLayout(layout)
         self.history_items = history_items or []
         self.list_widget.itemClicked.connect(self.show_details)
-        if history_items:
-            self.load_history(history_items)
         self.current_env_vars = None
         self.current_auth_config = None
+        self.error_label = QLabel()
+        layout.addWidget(self.error_label)
+        self.load_history_from_backend()
+
+    def load_history_from_backend(self):
+        import requests
+        try:
+            resp = requests.get("http://localhost:8000/history", timeout=10)
+            resp.raise_for_status()
+            items = resp.json().get("history", [])
+            self.load_history(items)
+            self.error_label.setText("")
+        except Exception as e:
+            self.list_widget.clear()
+            self.error_label.setText(f"Error loading history: {e}")
 
     def load_history(self, items):
         self.list_widget.clear()

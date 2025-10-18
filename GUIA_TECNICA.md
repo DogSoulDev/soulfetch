@@ -1,4 +1,6 @@
-# SoulFetch Technical Guide
+
+![SoulFetch Logo](assets/soulfetch_icon.png)
+# SoulFetch - Guía Técnica
 
 ## Índice
 - [1. Introducción técnica](#1-introducción-técnica)
@@ -19,7 +21,7 @@
 ---
 
 ## 1. Introducción técnica
-SoulFetch es un cliente API avanzado, multiplataforma, construido con una arquitectura robusta y modular. El frontend usa PySide6 (Qt) bajo el patrón MVC, mientras que el backend emplea FastAPI siguiendo principios hexagonales. Todo el código sigue SOLID, DRY y KISS.
+SoulFetch es un cliente API avanzado, multiplataforma, construido con una arquitectura robusta y modular. El frontend utiliza PySide6 (Qt) bajo el patrón MVC, mientras que el backend emplea FastAPI siguiendo principios hexagonales. Todo el código sigue SOLID, DRY y KISS.
 
 ## 2. Estructura de carpetas y módulos
 ```
@@ -27,20 +29,20 @@ backend/
   adapters/      # Routers y endpoints (collections, history, environments, etc.)
   application/   # Lógica de aplicación, casos de uso
   domain/        # Modelos de dominio y entidades
-  main.py        # Entry point backend
+  main.py        # Punto de entrada backend
 frontend/
   controllers/   # Lógica de control y orquestación de vistas/modelos
   models/        # Modelos de datos y lógica de negocio frontend
   views/         # Vistas PySide6 (QMainWindow, tabs, widgets)
-  main.py        # Entry point frontend
+  main.py        # Punto de entrada frontend
 assets/          # Iconos, imágenes, recursos estáticos
 SoulFetch.spec   # Configuración PyInstaller para .exe
 LICENSE         # Licencia open source
 ```
 
 ## 3. Arquitectura y patrones
-- **Frontend:** MVC puro (controllers, models, views). Cada tab es un widget desacoplado.
-- **Backend:** Hexagonal (puertos y adaptadores). Routers desacoplados de lógica de dominio.
+- **Frontend:** MVC puro (controllers, models, views). Cada pestaña es un widget desacoplado.
+- **Backend:** Hexagonal (puertos y adaptadores). Routers desacoplados de la lógica de dominio.
 - **Principios:** SOLID, DRY, KISS, separación de responsabilidades, modularidad, extensibilidad.
 
 ## 4. Backend: FastAPI Hexagonal
@@ -49,16 +51,16 @@ LICENSE         # Licencia open source
 - **Aplicación:** Casos de uso y orquestación en `application/`.
 - **Persistencia:** SQLite, acceso directo o vía modelos Pydantic.
 - **Mock server:** Router dedicado para pruebas y simulación de APIs.
-- **WebSocket:** Soporte para colaboración y sync en tiempo real.
+- **WebSocket:** Soporte para colaboración y sincronización en tiempo real.
 
 ## 5. Frontend: PySide6 MVC
-- **MainWindow:** Orquesta pestañas, sidebar, status bar, temas, shortcuts y notificaciones.
-- **Tabs:** Cada funcionalidad (Request, History, Auth, etc.) es un widget independiente.
+- **MainWindow:** Orquesta pestañas, status bar, temas, atajos y notificaciones.
+ - **Tabs:** Cada funcionalidad (Request, History, Auth, etc.) es un widget independiente. Las pestañas Mock Server, Cloud Sync, CodeGen, Visualization y Workspace Collaboration se ocultan automáticamente si el endpoint no está disponible o no tienen lógica real. La pestaña Flow Designer ha sido eliminada hasta que exista backend real.
 - **Controllers:** Gestionan la lógica de cada vista y la comunicación con modelos y backend.
 - **Models:** Encapsulan datos y lógica de negocio local.
 - **Vistas:** Widgets PySide6, layouts responsivos, dark theme, accesibilidad.
 - **Notificaciones:** Toasts, status bar, mensajes de error y éxito.
-- **Shortcuts:** Atajos globales y por tab.
+- **Shortcuts:** Atajos globales y por pestaña.
 
 ## 6. Persistencia y modelo de datos
 - **SQLite:** Base de datos local (`db/soulfetch.db`).
@@ -74,7 +76,7 @@ LICENSE         # Licencia open source
 
 ## 8. Empaquetado y despliegue
 - **PyInstaller:** Archivo `SoulFetch.spec` para generar el .exe con icono y recursos.
-- **Icono:** `assets/soulfetch_icon.ico` y `.png` para integración Windows.
+- **Icono:** `assets/soulfetch_icon.ico` y `.png` para integración en Windows.
 - **Cross-platform:** Compatible con Windows 11 y Linux (Debian).
 
 ## 9. Integración de iconos y recursos
@@ -84,19 +86,19 @@ LICENSE         # Licencia open source
 
 ## 10. Seguridad, privacidad y buenas prácticas
 - **Privacy mode:** Botón global, desactiva historial y persistencia.
-- **Validación:** Inputs validados en frontend y backend.
+- **Validación:** Entradas validadas en frontend y backend.
 - **Errores:** Manejo robusto, logs y feedback al usuario.
 - **CORS:** Configurado en backend para desarrollo y producción.
 - **Licencia:** MIT con atribución obligatoria.
 
 ## 11. Extensibilidad y personalización
-- **Plugins:** Tab de plugins/scripting para extensiones Python.
+- **Plugins:** Pestaña de plugins/scripting para extensiones Python.
 - **Codegen:** Generación de snippets multi-lenguaje.
 - **Temas:** Selector dark/light, fácil de ampliar.
 - **Variables globales:** Panel de entorno editable.
 
 ## 12. Colaboración y sincronización
-- **Cloud Sync:** Sincronización bi-direccional con backend.
+- **Cloud Sync:** Sincronización bidireccional con backend.
 - **Workspace Collaboration:** WebSocket y endpoints dedicados.
 - **User Management:** Gestión de usuarios, roles y permisos.
 
@@ -118,10 +120,11 @@ LICENSE         # Licencia open source
 
 **Autor:** DogSoulDev — https://dogsouldev.github.io/Web/
 
+---
 # 15. Ejemplos de uso avanzado
 
 ## Ejemplo: Crear y ejecutar una colección de peticiones
-1. Abre SoulFetch y crea una nueva colección desde la barra lateral.
+1. Abre SoulFetch y crea una nueva colección desde la pestaña principal.
 2. Añade varias peticiones (GET, POST, etc.) con diferentes entornos.
 3. Usa variables de entorno en la URL y el body (`{{API_URL}}`, `{{TOKEN}}`).
 4. Ejecuta la colección y visualiza los resultados en la pestaña de History.
@@ -137,6 +140,7 @@ LICENSE         # Licencia open source
 - Sincroniza colecciones y entornos con Cloud Sync.
 - Gestiona usuarios y permisos desde User Management.
 
+---
 # 16. Troubleshooting y preguntas frecuentes
 
 **¿Por qué no veo respuestas o el backend no responde?**
@@ -152,6 +156,7 @@ LICENSE         # Licencia open source
 **¿Cómo empaqueto el programa para Windows?**
 - Usa PyInstaller con el spec incluido: `pyinstaller SoulFetch.spec`.
 
+---
 # 17. Diagrama de arquitectura (ASCII)
 
 ```
@@ -172,6 +177,7 @@ LICENSE         # Licencia open source
 3. El backend responde con datos, que se muestran en las vistas.
 4. Todo es modular, desacoplado y extensible.
 
+---
 # 18. Glosario rápido
 
 - **Colección:** Grupo de peticiones guardadas.

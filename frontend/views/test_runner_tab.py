@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QTextEdit, QPushButton, QLabel, QHBoxLayout, QListWidget, QLineEdit
 from PySide6.QtCore import Qt
 
-class TestRunnerTab(QWidget):
+class _TestRunnerTab(QWidget):
     def __init__(self):
         super().__init__()
         layout = QVBoxLayout()
@@ -111,3 +111,7 @@ class TestRunnerTab(QWidget):
         finally:
             sys.stdout = old_stdout
         return output
+
+
+__all__ = ["TestRunnerTab"]
+TestRunnerTab = _TestRunnerTab
