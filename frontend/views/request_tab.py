@@ -252,7 +252,19 @@ class RequestTab(QWidget):
 
     def _on_request_finished(self, result):
         self.response_progress.setValue(100)
-        self.terminal_log.appendPlainText(f"[RESPONSE] Status: {result['status']} | Time: {result['elapsed']:.2f}s | Size: {len(result['content'])} bytes")
+        status = result['status']
+        # Color simple para status
+        if 200 <= status < 300:
+            color = 'green'
+        elif 300 <= status < 400:
+            color = 'goldenrod'
+        elif 400 <= status < 500:
+            color = 'orange'
+        else:
+            color = 'red'
+        # Mostrar status coloreado en el info bar
+        self.response_info.setText(f'<span style="color:{color};font-weight:bold;">Status: {status}</span> | Time: {result["elapsed"]:.2f}s | Size: {len(result["content"])} bytes')
+        self.terminal_log.appendPlainText(f"[RESPONSE] Status: {status} | Time: {result['elapsed']:.2f}s | Size: {len(result['content'])} bytes")
         # TODO: Update response tabs and info bar
 
     def _on_request_error(self, error):

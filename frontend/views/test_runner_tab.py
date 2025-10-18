@@ -30,6 +30,14 @@ class _TestRunnerTab(QWidget):
         self.setLayout(layout)
         self.tests = []
         self.last_response = None
+        # Plantillas útiles para ciberseguridad y programación
+        self.add_test("Status 200", "assert response.status == 200")
+        self.add_test("JSON válido", "import json\njson.loads(response.body)")
+        self.add_test("SQL Injection detectado", "assert 'syntax error' not in response.body.lower()")
+        self.add_test("XSS detectado", "assert '<script>' not in response.body.lower()")
+        self.add_test("Tiempo de respuesta < 2s", "assert getattr(response, 'elapsed', 1) < 2")
+        self.add_test("Cabecera personalizada", "assert 'X-Api-Key' in response.body")
+        self.add_test("Autenticación Bearer", "assert 'Bearer' in response.body or response.status == 401")
     def import_tests(self):
         from PySide6.QtWidgets import QFileDialog, QMessageBox
         import json

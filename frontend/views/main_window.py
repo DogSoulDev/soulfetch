@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("SoulFetch API Client")
+        self.setWindowTitle("SoulFetch")
         self.setGeometry(100, 100, 1100, 700)
 
         # Status bar

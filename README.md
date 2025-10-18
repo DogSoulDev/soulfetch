@@ -1,4 +1,4 @@
-![SoulFetch Logo](assets/soul.png)
+
 
 # SoulFetch
 
@@ -109,8 +109,24 @@ SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It f
 - Windows 11
 - Linux (Debian)
 
+
 ## Screenshots
-![Main Window](assets/soulfetch_icon.png)
+![Main Window](assets/screen.png)
+
+## SoulFetch Tabs Overview
+- **Request:** Build and send API requests (GET, POST, etc.), with templates for pentesting and programming.
+- **History:** View, export, and import the history of all requests and responses.
+- **Test Runner:** Run and edit Python scripts to validate responses, with preloaded security/programming templates.
+- **Environments:** Manage, encrypt, and preview environment variables; import/export in multiple formats.
+- **Auth:** Advanced authentication options (Bearer, Basic, custom).
+- **Response Visualizer:** View responses in raw, pretty, diff, and chart formats.
+- **Scheduler/Monitor:** Schedule and monitor endpoints, with alerts and status table.
+- **Plugins/Scripting:** Import, export, and run Python plugins or custom scripts.
+- **User Management:** Add, remove, and list users, fully integrated with backend.
+- **Cloud Sync:** Real bi-directional sync with backend, preview data and sync history.
+- **Visualization:** Aggregated stats, method counts, and advanced data visualization.
+- **Accessibility/i18n:** Toggle high contrast, change language, and improve usability.
+- **Mock Server, CodeGen, Workspace Collaboration:** Only visible if backend endpoints are available.
 
 
 ## Documentation & Contribution

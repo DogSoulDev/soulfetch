@@ -1,5 +1,5 @@
 
-![SoulFetch Logo](assets/soul.png)
+![SoulFetch Main Window](assets/screen.png)
 # SoulFetch - Guía Técnica
 
 ## Índice
@@ -54,6 +54,22 @@ LICENSE         # Licencia open source
 - **WebSocket:** Soporte para colaboración y sincronización en tiempo real.
 
 ## 5. Frontend: PySide6 MVC
+
+### Resumen de pestañas y funcionalidades
+
+- **Request:** Construye y envía peticiones API (GET, POST, etc.), con plantillas para pentesting y programación.
+- **History:** Visualiza, exporta e importa el historial de todas las peticiones y respuestas.
+- **Test Runner:** Ejecuta y edita scripts Python para validar respuestas, con plantillas útiles para ciberseguridad y desarrollo.
+- **Environments:** Gestiona, cifra y previsualiza variables de entorno; importa/exporta en varios formatos.
+- **Auth:** Opciones avanzadas de autenticación (Bearer, Basic, personalizada).
+- **Response Visualizer:** Visualiza respuestas en formatos raw, pretty, diff y gráficos.
+- **Scheduler/Monitor:** Programa y monitoriza endpoints, con alertas y tabla de estados.
+- **Plugins/Scripting:** Importa, exporta y ejecuta plugins Python o scripts personalizados.
+- **User Management:** Añade, elimina y lista usuarios, integrado con el backend.
+- **Cloud Sync:** Sincronización real bidireccional con backend, preview de datos e historial de sincronización.
+- **Visualization:** Estadísticas agregadas, conteo de métodos y visualización avanzada de datos.
+- **Accessibility/i18n:** Alterna alto contraste, cambia idioma y mejora la usabilidad.
+- **Mock Server, CodeGen, Workspace Collaboration:** Solo visibles si el endpoint backend está disponible.
 - **MainWindow:** Orquesta pestañas, status bar, temas, atajos y notificaciones.
 - **Tabs:** Cada funcionalidad (Request, History, Auth, etc.) es un widget independiente. Las pestañas Mock Server, Cloud Sync, CodeGen, Visualization y Workspace Collaboration se ocultan automáticamente si el endpoint no está disponible o no tienen lógica real. La pestaña Flow Designer ha sido eliminada hasta que exista backend real. Los atajos de teclado incluyen: Enter/Ctrl+Enter/Ctrl+R para enviar, Ctrl+S para guardar, Ctrl+Tab para navegar.
 - **Controllers:** Gestionan la lógica de cada vista y la comunicación con modelos y backend.
