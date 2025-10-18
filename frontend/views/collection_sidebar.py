@@ -179,7 +179,7 @@ class CollectionSidebar(QWidget):
             menu = QMenu(self)
             if item:
                 parent = item.parent()
-                # Collections section: Postman-like menu
+                # Collections section: menu
                 if parent and parent.text(0) == "Collections":
                     action_rename = QAction("Rename", self)
                     action_rename.triggered.connect(lambda: self.rename_collection(item))

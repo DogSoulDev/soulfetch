@@ -14,11 +14,11 @@
 ## Requirements
 
 
-SoulFetch Python project. Frontend with PySide6 (MVC), backend with FastAPI (Hexagonal architecture), local persistence with SQLite, tests folder, dark theme inspired by Burp Suite, following SOLID, DRY, KISS principles. Compatible with Windows 11 and Linux (Debian).
+SoulFetch Python project. Frontend with PySide6 (MVC), backend with FastAPI (Hexagonal architecture), local persistence with SQLite, tests folder, dark theme, following SOLID, DRY, KISS principles. Compatible with Windows 11 and Linux (Debian).
 
 ## Execution Guidelines
 
 - Follow SOLID, DRY, KISS principles.
-- Use a dark theme inspired by Burp Suite in the frontend.
+- Use a dark theme in the frontend.
 - Maintain a clear and modular structure: MVC for frontend, Hexagonal for backend.
 - Document in README.md and keep this file up to date.

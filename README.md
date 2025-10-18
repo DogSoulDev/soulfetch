@@ -2,7 +2,7 @@
 
 # SoulFetch
 
-SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp Suite. Designed for Windows 11 and Linux (Debian), it features a professional dark theme and advanced tools for API development, testing, and automation.
+SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It features a professional dark theme and advanced tools for API development, testing, and automation.
 
 ## Directory Structure
 
@@ -28,7 +28,7 @@ SoulFetch is a modern, robust API client inspired by Postman, Apidog, and Burp S
 ```
 
 ## Architecture
-- **Frontend:** PySide6, MVC pattern, dark theme inspired by Burp Suite, UX details from Postman/Apidog
+- **Frontend:** PySide6, MVC pattern, dark theme, UX profesional
 - **Backend:** FastAPI, Hexagonal architecture, modular routers
 - **Persistence:** SQLite local database
 - **Testing:** Full test suite in `tests/` (pytest)

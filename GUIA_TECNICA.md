@@ -111,9 +111,6 @@ LICENSE         # Licencia open source
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [PySide6](https://doc.qt.io/qtforpython/)
 - [PyInstaller](https://pyinstaller.org/)
-- [Burp Suite](https://portswigger.net/burp)
-- [Postman](https://www.postman.com/)
-- [Apidog](https://apidog.com/)
 - [MIT License](LICENSE)
 
 ---
