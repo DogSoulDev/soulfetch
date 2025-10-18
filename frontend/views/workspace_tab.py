@@ -36,9 +36,12 @@ class WorkspaceTab(QWidget):
                 ws = resp.json()
                 self.workspace_list.addItem(f"{ws['name']} (Owner: {ws['owner']})")
         except Exception as e:
-            # Provide visible feedback instead of silently passing
-            self.status_label.setText(f"Failed to refresh workspaces: {e}")
-            print(f"[WorkspaceTab] refresh_workspaces error: {e}")
+            msg = str(e)
+            if 'Failed to connect' in msg or 'Connection refused' in msg:
+                self.status_label.setText("Backend unavailable. Please start the SoulFetch backend server.")
+            else:
+                self.status_label.setText(f"Failed to refresh workspaces: {msg}")
+            print(f"[WorkspaceTab] refresh_workspaces error: {msg}")
 
     def create_workspace(self):
         import requests
@@ -51,7 +54,11 @@ class WorkspaceTab(QWidget):
                 self.refresh_workspaces()
                 QMessageBox.information(self, "Workspace", f"Workspace '{name}' created.")
             except Exception as e:
-                QMessageBox.critical(self, "Workspace Error", f"Failed to create workspace: {e}")
+                msg = str(e)
+                if 'Failed to connect' in msg or 'Connection refused' in msg:
+                    QMessageBox.critical(self, "Workspace Error", "Backend unavailable. Please start the SoulFetch backend server.")
+                else:
+                    QMessageBox.critical(self, "Workspace Error", f"Failed to create workspace: {msg}")
 
     def connect_workspace(self):
         from PySide6.QtCore import QUrl

@@ -264,7 +264,28 @@ class RequestTab(QWidget):
             color = 'red'
         # Mostrar status coloreado en el info bar
         self.response_info.setText(f'<span style="color:{color};font-weight:bold;">Status: {status}</span> | Time: {result["elapsed"]:.2f}s | Size: {len(result["content"])} bytes')
-        self.terminal_log.appendPlainText(f"[RESPONSE] Status: {status} | Time: {result['elapsed']:.2f}s | Size: {len(result['content'])} bytes")
+        # Add status code explanation
+        status_explanations_en = {
+            200: "OK: The request was successful.",
+            201: "Created: Resource created successfully.",
+            204: "No Content: No content in response.",
+            400: "Bad Request: Malformed request.",
+            401: "Unauthorized: Not authorized.",
+            403: "Forbidden: Access forbidden.",
+            404: "Not Found: Resource not found.",
+            405: "Method Not Allowed: Method not allowed.",
+            409: "Conflict: Data conflict.",
+            422: "Unprocessable Entity: Unprocessable entity.",
+            429: "Too Many Requests: Too many requests.",
+            500: "Internal Server Error: Internal server error.",
+            502: "Bad Gateway: Bad gateway.",
+            503: "Service Unavailable: Service unavailable."
+        }
+        explanation = status_explanations_en.get(status, "")
+        self.terminal_log.appendPlainText(
+            f"[RESPONSE] Status: {status} | Time: {result['elapsed']:.2f}s | Size: {len(result['content'])} bytes"
+            + (f"\n[STATUS EXPLANATION] {explanation}" if explanation else "")
+        )
         # TODO: Update response tabs and info bar
 
     def _on_request_error(self, error):

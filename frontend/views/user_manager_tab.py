@@ -29,7 +29,11 @@ class UserManagerTab(QWidget):
             for username in users:
                 self.user_list.addItem(username)
         except Exception as e:
-            QMessageBox.critical(self, "User Error", f"Failed to load users: {e}")
+            msg = str(e)
+            if 'Failed to connect' in msg or 'Connection refused' in msg:
+                QMessageBox.critical(self, "User Error", "Backend unavailable. Please start the SoulFetch backend server.")
+            else:
+                QMessageBox.critical(self, "User Error", f"Failed to load users: {msg}")
     def add_user(self):
         import requests
         username = self.username_input.text().strip()
@@ -41,7 +45,11 @@ class UserManagerTab(QWidget):
                 self.refresh_users()
                 QMessageBox.information(self, "User Added", f"User '{username}' added.")
             except Exception as e:
-                QMessageBox.critical(self, "User Error", f"Failed to add user: {e}")
+                msg = str(e)
+                if 'Failed to connect' in msg or 'Connection refused' in msg:
+                    QMessageBox.critical(self, "User Error", "Backend unavailable. Please start the SoulFetch backend server.")
+                else:
+                    QMessageBox.critical(self, "User Error", f"Failed to add user: {msg}")
     def remove_user(self):
         import requests
         selected = self.user_list.currentItem()
@@ -53,4 +61,8 @@ class UserManagerTab(QWidget):
                 self.refresh_users()
                 QMessageBox.information(self, "User Removed", f"User '{username}' removed.")
             except Exception as e:
-                QMessageBox.critical(self, "User Error", f"Failed to remove user: {e}")
+                msg = str(e)
+                if 'Failed to connect' in msg or 'Connection refused' in msg:
+                    QMessageBox.critical(self, "User Error", "Backend unavailable. Please start the SoulFetch backend server.")
+                else:
+                    QMessageBox.critical(self, "User Error", f"Failed to remove user: {msg}")

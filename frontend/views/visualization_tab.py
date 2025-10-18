@@ -29,5 +29,9 @@ class VisualizationTab(QWidget):
             self.data_edit.setText(text)
             QMessageBox.information(self, "Visualization", "Data visualization updated.")
         except Exception as e:
+            msg = str(e)
             self.data_edit.setText("")
-            QMessageBox.critical(self, "Visualization Error", f"Failed to visualize data: {e}")
+            if 'Failed to connect' in msg or 'Connection refused' in msg:
+                QMessageBox.critical(self, "Visualization Error", "Backend unavailable. Please start the SoulFetch backend server.")
+            else:
+                QMessageBox.critical(self, "Visualization Error", f"Failed to visualize data: {msg}")

@@ -7,10 +7,21 @@ from controllers.main_window_controller import MainWindowController
 import sys
 
 if __name__ == "__main__":
-    print("[SoulFetch] Iniciando aplicación...")
+    import subprocess
+    import time
+    print("[SoulFetch] Starting backend API server...")
+    backend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend', 'adapters', 'api.py'))
+    backend_proc = subprocess.Popen([sys.executable, backend_path])
+    time.sleep(2)  # Give backend time to start
+    print("[SoulFetch] Backend API server started.")
     app = QApplication(sys.argv)
     controller = MainWindowController()
-    print("[SoulFetch] Mostrando ventana principal...")
+    print("[SoulFetch] Showing main window...")
     controller.run()
-    print("[SoulFetch] Ventana principal mostrada. Esperando eventos...")
-    sys.exit(app.exec())
+    print("[SoulFetch] Main window shown. Waiting for events...")
+    exit_code = app.exec()
+    print("[SoulFetch] Shutting down backend API server...")
+    backend_proc.terminate()
+    backend_proc.wait()
+    print("[SoulFetch] Backend API server stopped.")
+    sys.exit(exit_code)
