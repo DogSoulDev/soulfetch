@@ -5,17 +5,17 @@ import os
 import traceback
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.adapters.collections_adapter import router as collections_router
-from backend.adapters.history import router as history_router
-from backend.adapters.environments import router as environments_router
-from backend.adapters.request_exec import router as request_exec_router
-from backend.adapters.mock_server import router as mock_server_router
-from backend.routers.user_manager import router as user_manager_router
-from backend.routers.workspace import router as workspace_router
-from backend.routers.visualization import router as visualization_router
-from backend.routers.codegen import router as codegen_router
-from backend.routers.cloud_sync import router as cloud_sync_router
-from backend.routers.i18n import router as i18n_router
+from .collections_adapter import router as collections_router
+from .history import router as history_router
+from .environments import router as environments_router
+from .request_exec import router as request_exec_router
+from .mock_server import router as mock_server_router
+from ..routers.user_manager import router as user_manager_router
+from ..routers.workspace import router as workspace_router
+from ..routers.visualization import router as visualization_router
+from ..routers.codegen import router as codegen_router
+from ..routers.cloud_sync import router as cloud_sync_router
+from ..routers.i18n import router as i18n_router
 
 app = FastAPI(title="SoulFetch API")
 app.add_middleware(

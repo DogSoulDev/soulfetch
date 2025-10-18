@@ -10,8 +10,7 @@ if __name__ == "__main__":
     import subprocess
     import time
     print("[SoulFetch] Starting backend API server...")
-    backend_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'backend', 'adapters', 'api.py'))
-    backend_proc = subprocess.Popen([sys.executable, backend_path])
+    backend_proc = subprocess.Popen([sys.executable, '-m', 'backend.main'])
     time.sleep(2)  # Give backend time to start
     print("[SoulFetch] Backend API server started.")
     app = QApplication(sys.argv)

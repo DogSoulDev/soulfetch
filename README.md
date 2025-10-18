@@ -78,7 +78,7 @@ SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It f
    ```
 2. **Run backend:**
    ```sh
-   python backend/main.py
+   python -m backend.main
    ```
 3. **Run frontend:**
    ```sh
