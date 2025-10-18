@@ -1,4 +1,8 @@
 
+<div align="center">
+  <img src="assets/soul.png" alt="SoulFetch Logo" width="180"/>
+</div>
+
 ![SoulFetch Main Window](assets/screen.png)
 # SoulFetch - Guía Técnica
 

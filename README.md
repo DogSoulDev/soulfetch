@@ -1,5 +1,10 @@
 
 
+
+<div align="center">
+   <img src="assets/soul.png" alt="SoulFetch Logo" width="180"/>
+</div>
+
 # SoulFetch
 
 SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It features a professional dark theme and advanced tools for API development, testing, and automation.
@@ -76,13 +81,9 @@ SoulFetch is a modern, robust API client for Windows 11 and Linux (Debian). It f
    ```sh
    pip install -r requirements.txt
    ```
-2. **Run backend:**
+2. **Run SoulFetch (backend + frontend):**
    ```sh
-   python -m backend.main
-   ```
-3. **Run frontend:**
-   ```sh
-   python frontend/main.py
+   python run_soulfetch.py
    ```
 4. **Run tests:**
    ```sh
