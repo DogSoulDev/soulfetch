@@ -1,4 +1,4 @@
-![SoulFetch Logo](assets/soulfetch_icon.png)
+![SoulFetch Logo](assets/soul.png)
 
 # SoulFetch
 
